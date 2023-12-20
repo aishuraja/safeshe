@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "786414303465",
+    "project_id": "safeshe-b6e42",
+    "storage_bucket": "safeshe-b6e42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786414303465:android:62127f771ea575bac49878",
+        "android_client_info": {
+          "package_name": "com.example.safeshe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi5YWVfaI3LYju8oz3oUdXdJRkf97S-vk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

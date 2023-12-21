@@ -1,14 +1,46 @@
 package com.example.safeshe
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import com.example.safeshe.databinding.ActivityMainBinding
+import com.firebase.ui.auth.AuthUI
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var drawerLayout: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        @Suppress("UNUSED_VARIABLE")
 
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+
+        drawerLayout = binding.drawerLayout
+
+        val navController = this.findNavController(R.id.myNavHostFragment)
+        NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
+
+        NavigationUI.setupWithNavController(binding.navView, navController)
+
+        binding.navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.logout_user ->
+                    AuthUI.getInstance().signOut(this)
+//                R.id.guardianInfo ->
+//                    navController.navigate(R.id.action_dashBoardFragment_to_guardianInfo)
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
+    }
+
+    override fun onSupportNavigateUp():Boolean{
+        val navController = this.findNavController(R.id.myNavHostFragment)
+        return NavigationUI.navigateUp(navController,drawerLayout)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.safeshe.guardiandetail
+package com.example.safeshe.guardians
 
 import android.os.Bundle
 import android.text.TextUtils

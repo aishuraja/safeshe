@@ -6,7 +6,7 @@
     app:startDestination="@id/dashBoardFragment">
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.example.safeshe.DashBoardFragment"
+        android:name="com.example.safeshe.DashboardFragment"
         android:label="Dashboard"
         tools:layout="@layout/fragment_dash_board">
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/addGuardian"
-        android:name="com.example.safeshe.guardiandetail.AddGuardian"
+        android:name="com.example.safeshe.guardians.AddGuardian"
         android:label="Add Guardian"
         tools:layout="@layout/fragment_add_guardian">
         <action

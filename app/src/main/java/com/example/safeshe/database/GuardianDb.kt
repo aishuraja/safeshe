@@ -6,21 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Guardian::class],version = 1,exportSchema = false)
-abstract class GuardianDatabase: RoomDatabase() {
+abstract class GuardianDb: RoomDatabase() {
     abstract fun guardianDatabaseDao():GuardianDao
 
     companion object{
-        private var INSTANCE: GuardianDatabase?= null
+        private var INSTANCE: GuardianDb?= null
 
-        fun getInstance(context: Context):GuardianDatabase{
+        fun getInstance(context: Context):GuardianDb{
             if(INSTANCE==null){
                 INSTANCE= Room.databaseBuilder(
                     context.applicationContext,
-                    GuardianDatabase::class.java,
+                    GuardianDb::class.java,
                     "GuardianDB"
                 ).build()
             }
-            return INSTANCE as GuardianDatabase
+            return INSTANCE as GuardianDb
         }
     }
 }

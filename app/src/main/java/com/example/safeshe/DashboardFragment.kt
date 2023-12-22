@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import androidx.room.Room
 import com.example.safeshe.database.Guardian
-import com.example.safeshe.database.GuardianDatabase
+import com.example.safeshe.database.GuardianDb
 import com.example.safeshe.databinding.FragmentDashBoardBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -30,7 +30,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DashBoardFragment<LoginViewModel : ViewModel> : Fragment() {
+class DashboardFragment<LoginViewModel : ViewModel> : Fragment() {
 
     private lateinit var binding: FragmentDashBoardBinding
 
@@ -50,13 +50,11 @@ class DashBoardFragment<LoginViewModel : ViewModel> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_dash_board, container, false
         )
 
-//        getLocation()
 
         binding.guardianButton.setOnClickListener { view: View ->
             view.findNavController()
@@ -64,7 +62,6 @@ class DashBoardFragment<LoginViewModel : ViewModel> : Fragment() {
         }
 
         binding.emerButton.setOnClickListener {
-//            getLocation()
             if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.SEND_SMS)
                     != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.SEND_SMS), PERMISSION_SEND_SMS)
@@ -90,11 +87,7 @@ class DashBoardFragment<LoginViewModel : ViewModel> : Fragment() {
         if (requestCode == SIGN_IN_RESULT_CODE) {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == Activity.RESULT_OK) {
-                //User successfully signed in
             } else {
-                // Sign in failed. If response is null, the user canceled the
-                // sign-in flow using the back button. Otherwise, check
-                // the error code and handle the error.
                 Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
             }
         }
@@ -115,23 +108,17 @@ class DashBoardFragment<LoginViewModel : ViewModel> : Fragment() {
     }
 
     private fun launchSignInFlow() {
-        // Give users the option to sign in / register with their email
-        // If users choose to register with their email,
-        // they will need to create a password as well
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
             //
         )
 
-        // Create and launch sign-in intent.
-        // We listen to the response of this activity with the
-        // SIGN_IN_RESULT_CODE code
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(
                 providers
             ).setTheme(R.style.LoginTheme_NoActionBar)
                 .setLogo(R.drawable.women)
-                .build(), DashBoardFragment.SIGN_IN_RESULT_CODE
+                .build(), DashboardFragment.SIGN_IN_RESULT_CODE
         )
     }
 
@@ -148,7 +135,7 @@ class DashBoardFragment<LoginViewModel : ViewModel> : Fragment() {
 
     private fun emergencyFun() {
         val db =
-            Room.databaseBuilder(activity!!, GuardianDatabase::class.java, "GuardianDB").build()
+            Room.databaseBuilder(activity!!, GuardianDb::class.java, "GuardianDB").build()
         val emailList: List<Guardian> = db.guardianDatabaseDao().getEmail()
 
         var maillist: String = ""

@@ -1,17 +1,21 @@
-package com.example.safeshe.guardiandetail
+package com.example.safeshe.guardians
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.safeshe.database.Guardian
-import com.example.safeshe.database.GuardianDatabase
-import kotlinx.coroutines.*
+import com.example.safeshe.database.GuardianDb
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GuardianInfoViewModel(
     application: Application): AndroidViewModel(application) {
 
-    private val db:GuardianDatabase = GuardianDatabase.getInstance(application)
+    private val db:GuardianDb = GuardianDb.getInstance(application)
     internal val allGuardians : LiveData<List<Guardian>> = db.guardianDatabaseDao().getAllGuardians()
 
 
@@ -34,10 +38,8 @@ class GuardianInfoViewModel(
     fun onClear() {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                // Clear the database table.
                 db.guardianDatabaseDao().clear()
             }
-            // Show a snackbar message, because it's friendly.
             _showSnackbarEvent.value = true
         }
     }
@@ -45,8 +47,6 @@ class GuardianInfoViewModel(
     fun doneShowingSnackbar() {
         _showSnackbarEvent.value = null
     }
-
-    //Called when ViewModel is dismantled
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
